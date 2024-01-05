@@ -1,0 +1,32 @@
+{
+  "name": "DTLeads Extended",
+  "description": "",
+  "version": "0.1",
+  "manifest_version": 3,
+  "host_permissions": [
+    "https://www.linkedin.com/*"
+  ],
+  "permissions": [],
+  "author": "Graham Ormond",
+  "short_name": "DTLeads Extended",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "",
+    "default_icon": {
+    }
+  },
+  "icons": {
+  },
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["static/js/content.js"]
+    }
+  ],
+  "content_security_policy": {
+     "extension_pages": "script-src 'self'; object-src 'self'"
+  } 
+}
