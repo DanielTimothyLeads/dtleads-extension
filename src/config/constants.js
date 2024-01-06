@@ -21,25 +21,9 @@ const S3_PUBLIC_URL = 'https://dtleadsbucketbucket.s3.amazonaws.com/public/';
 
 const DTLEADS_DASHBOARD_URL = 'https://dashboard.danieltimothyleads.com';
 
-const SEQUENCE_PROSPECT_STATES = [
-  {
-    label: 'PENDING',
-    value: 1
-  },
-  {
-    label: 'ACTIVE',
-    value: 2
-  },
-  {
-    label: 'PAUSED',
-    value: 3
-  }
-];
-
 export {
   PRODUCTION,
   AWS_COGNITO_SETTINGS,
   S3_PUBLIC_URL,
-  SEQUENCE_PROSPECT_STATES,
   DTLEADS_DASHBOARD_URL
 };

@@ -1,12 +1,18 @@
 {
   "name": "DTLeads Extended",
-  "description": "",
+  "description": "Import prospects from around the web into Daniel Timothy Leads.",
   "version": "0.1",
   "manifest_version": 3,
   "host_permissions": [
     "https://www.linkedin.com/*"
   ],
-  "permissions": [],
+  "permissions": [
+    "webRequest",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "tabs",
+    "storage"
+  ],
   "author": "Graham Ormond",
   "short_name": "DTLeads Extended",
   "action": {
@@ -28,5 +34,6 @@
   ],
   "content_security_policy": {
      "extension_pages": "script-src 'self'; object-src 'self'"
-  } 
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu3IefMTFdUwUWWUkCV5EluPJG02++FkH9q00AM6XgvOk/lhiA75UbL2rYqvm6I4wAFwu2svV+DVnYi00mgNPMbMfA7wc3XyG+8q73nSY1sR+oTADmXjj628Tunc9crrYE6wDPx+2w7u4ZQLnt87tgmqi+D3Yt9Ck2UIK2gZfAdgMtLPd9l1iAi/tuWusbFTVE3zZDJT5wEEZIxX9oYR2HaEA8HaJsIKkQfWZGXq2TQhnDYl1+Y/3nZRSJ3VPEHCIW4nSORZFepxFfK4QMhPXAT18+Qci+wfkJYVQX5nytfvQ30Z9vAUu0/y0ZTjOkIgviuygFIC3kbca+dt50pJlJwIDAQAB"
 }

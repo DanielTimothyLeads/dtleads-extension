@@ -1,55 +1,9 @@
-import React, { useEffect, useReducer } from 'react';
-import { Box, Card, Divider, Stack, Tooltip } from '@mantine/core';
+import React from 'react';
+import { Box, Card, Stack } from '@mantine/core';
 import PropTypes from 'prop-types';
-import Draggable from 'react-draggable';
-import Header from '../navigation/Header';
-
-const initialState = {
-  isDragging: false,
-  hasStoppedDragging: false,
-  isModalOpen: false
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'open-modal':
-      return {
-        ...state,
-        isModalOpen: !state.isDragging
-      };
-    case 'close-modal':
-      return {
-        ...state,
-        isModalOpen: false
-      };
-    case 'toggle-drag':
-      return {
-        ...state,
-        isDragging: action.payload,
-        hasStoppedDragging: false
-      };
-    case 'drag-stop':
-      return {
-        ...state,
-        hasStoppedDragging: true
-      };
-    default:
-      return state;
-  }
-};
+import Header from '../content/navigation/Header';
 
 const TabContentModal = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    if (state.hasStoppedDragging) {
-      dispatch({
-        type: 'toggle-drag',
-        payload: false
-      });
-    }
-  }, [state.hasStoppedDragging]);
-
   return (
     <Box
       style={{
@@ -70,70 +24,25 @@ const TabContentModal = ({ children }) => {
         }}
       >
         <Stack style={{ flex: 1 }}>
-          <Draggable
-            axis="y"
-            bounds="parent"
-            handle=".handle"
-            onDrag={() =>
-              dispatch({
-                type: 'toggle-drag',
-                payload: true
-              })
-            }
-            position={null}
+          <Card
+            onClick={e => {}}
+            shadow="xl"
+            style={{
+              pointerEvents: 'all',
+              padding: 0,
+              border: 'solid 1px #FFF',
+              borderRadius: 10,
+              width: 400,
+              height: '100%'
+            }}
           >
-            <Stack
-              className="handle"
-              style={{
-                top: '35%',
-                pointerEvents: 'all',
-                cursor: state.isModalOpen ? 'default' : 'pointer',
-                position: 'relative'
-              }}
-            >
-              <Tooltip
-                color="blue"
-                disabled={state.isModalOpen}
-                label="DTLeads Extended"
-                withArrow
-              >
-                <Card
-                  onClick={e => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    if (!state.isModalOpen) {
-                      dispatch({ type: 'open-modal' });
-                    }
-                  }}
-                  onMouseUp={() => dispatch({ type: 'drag-stop' })}
-                  shadow="xl"
-                  style={{
-                    padding: 0,
-                    border: 'solid 1px #FFF',
-                    borderRadius: 10,
-                    width: state.isModalOpen ? 350 : 55,
-                    height: state.isModalOpen ? 600 : 55
-                  }}
-                >
-                  {!state.isModalOpen ? (
-                    <Stack
-                      style={{ placeItems: 'center', height: '100%' }}
-                    ></Stack>
-                  ) : (
-                    <Stack style={{ flex: 1, gap: 0, height: '100%' }}>
-                      <Header
-                        onClose={() => dispatch({ type: 'close-modal' })}
-                      />
-                      <Divider />
-                      <Stack style={{ padding: 10, flex: 1, overflow: 'auto' }}>
-                        {children}
-                      </Stack>
-                    </Stack>
-                  )}
-                </Card>
-              </Tooltip>
+            <Stack style={{ flex: 1, gap: 0, height: '100%' }}>
+              <Header onClose={() => {}} />
+              <Stack style={{ padding: 10, flex: 1, overflow: 'auto' }}>
+                {children}
+              </Stack>
             </Stack>
-          </Draggable>
+          </Card>
         </Stack>
       </Stack>
     </Box>
