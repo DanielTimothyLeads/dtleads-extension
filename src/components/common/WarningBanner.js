@@ -1,4 +1,3 @@
-/* global chrome */
 import React from 'react';
 import { Box, Stack } from '@mantine/core';
 import PropTypes from 'prop-types';

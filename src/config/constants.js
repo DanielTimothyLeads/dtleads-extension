@@ -1,29 +1,14 @@
-const PRODUCTION = false;
-
-const AWS_COGNITO_SETTINGS = {
-  Auth: {
-    identityPoolId: 'us-east-1:d0c4a0dc-4ef8-473f-947b-ded3ac0cc9a2',
-    region: 'us-east-1',
-    identityPoolRegion: 'us-east-1',
-    userPoolId: 'us-east-1_Z3M0dEOq8',
-    userPoolWebClientId: '6rbr3ee93c0559d4ak5qi77uc5',
-    mandatorySignIn: true
-  },
-  Storage: {
-    AWSS3: {
-      bucket: 'dtleadsbucket',
-      region: 'us-east-1'
-    }
-  }
-};
-
-const S3_PUBLIC_URL = 'https://dtleadsbucketbucket.s3.amazonaws.com/public/';
+const PRODUCTION = true;
 
 const DTLEADS_DASHBOARD_URL = 'https://dashboard.danieltimothyleads.com';
+const DTLEADS_DASHBOARD_URL_LOCAL =
+  'https://local.dashboard.danieltimothyleads.com:8000';
+
+const PERMITTED_URLS = ['https://www.linkedin.com/'];
 
 export {
   PRODUCTION,
-  AWS_COGNITO_SETTINGS,
-  S3_PUBLIC_URL,
-  DTLEADS_DASHBOARD_URL
+  DTLEADS_DASHBOARD_URL,
+  DTLEADS_DASHBOARD_URL_LOCAL,
+  PERMITTED_URLS
 };

@@ -1,13 +1,7 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import {
-  MemoryRouter as Router,
-  Route,
-  Routes,
-  Navigate
-} from 'react-router-dom';
+/* global chrome */
+import React, { useState } from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
 import TabContentModal from '../components/common/TabContentModal';
-import ContentScriptLogin from '../components/content/auth/ContentScriptLogin';
-import { Context as AuthContext } from '../providers/AuthProvider';
 
 const getInitialLocation = pathname => {
   const splitUrl = (
@@ -23,34 +17,33 @@ const getInitialLocation = pathname => {
 };
 
 const App = () => {
-  const hasAttemptedToken = useRef(false);
-  const { state, tokenLogin } = useContext(AuthContext);
   const initalLocation = getInitialLocation(window.location.pathname);
-  const showAuthView = !state.isAuthenticated || !state.association;
-  const isLoading = !hasAttemptedToken.current || state.loading;
+  const [tabContentState, setTabContentState] = useState({
+    isOpen: false
+  });
 
-  useEffect(() => {
-    if (!state.tokenAttempted) {
-      tokenLogin();
-      hasAttemptedToken.current = true;
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'open_tab') {
+      setTabContentState(c => ({
+        ...c,
+        isOpen: true
+      }));
     }
-  }, []);
+    return true;
+  });
 
   return (
-    !isLoading && (
-      <Router initialEntries={[initalLocation]}>
-        {showAuthView ? (
-          <ContentScriptLogin />
-        ) : (
-          <TabContentModal>
-            <Routes>
-              <Route element={<></>} path="/" />
-              <Route element={<Navigate replace to="/" />} path="*" />
-            </Routes>
-          </TabContentModal>
-        )}
-      </Router>
-    )
+    <Router initialEntries={[initalLocation]}>
+      <TabContentModal
+        isOpen={tabContentState.isOpen}
+        onToggle={() =>
+          setTabContentState({
+            ...tabContentState,
+            isOpen: !tabContentState.isOpen
+          })
+        }
+      />
+    </Router>
   );
 };
 

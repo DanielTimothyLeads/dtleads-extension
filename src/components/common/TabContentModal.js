@@ -1,9 +1,14 @@
 import React from 'react';
-import { Box, Card, Stack } from '@mantine/core';
+import { Box, Button, Card, Group, Stack } from '@mantine/core';
 import PropTypes from 'prop-types';
-import Header from '../content/navigation/Header';
+import { ChevronLeft, X } from 'tabler-icons-react';
+import {
+  DTLEADS_DASHBOARD_URL,
+  DTLEADS_DASHBOARD_URL_LOCAL,
+  PRODUCTION
+} from '../../config/constants';
 
-const TabContentModal = ({ children }) => {
+const TabContentModal = ({ isOpen, onToggle }) => {
   return (
     <Box
       style={{
@@ -12,7 +17,7 @@ const TabContentModal = ({ children }) => {
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 999999999,
+        zIndex: 99,
         pointerEvents: 'none'
       }}
     >
@@ -23,34 +28,75 @@ const TabContentModal = ({ children }) => {
           height: '100%'
         }}
       >
-        <Stack style={{ flex: 1 }}>
+        <Group style={{ flex: 1, gap: 0 }}>
+          <Button.Group orientation="vertical" style={{ pointerEvents: 'all' }}>
+            {isOpen ? (
+              <>
+                <Button
+                  onClick={onToggle}
+                  style={{
+                    backgroundColor: '#3c3c3c',
+                    padding: 0,
+                    width: 40,
+                    height: 50
+                  }}
+                  variant="default"
+                >
+                  <X color="#FFF" />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={onToggle}
+                  style={{
+                    backgroundColor: '#3c3c3c',
+                    padding: 0,
+                    width: 40,
+                    height: 50
+                  }}
+                  variant="default"
+                >
+                  <ChevronLeft color="#FFF" />
+                </Button>
+              </>
+            )}
+          </Button.Group>
           <Card
-            onClick={e => {}}
             shadow="xl"
             style={{
               pointerEvents: 'all',
               padding: 0,
-              border: 'solid 1px #FFF',
-              borderRadius: 10,
-              width: 400,
-              height: '100%'
+              borderRadius: 0,
+              width: 450,
+              height: '100%',
+              display: isOpen ? 'flex' : 'none'
             }}
           >
-            <Stack style={{ flex: 1, gap: 0, height: '100%' }}>
-              <Header onClose={() => {}} />
-              <Stack style={{ padding: 10, flex: 1, overflow: 'auto' }}>
-                {children}
-              </Stack>
-            </Stack>
+            <iframe
+              allow="autoplay;microphone;clipboard-write;camera;fullscreen;"
+              src={
+                PRODUCTION ? DTLEADS_DASHBOARD_URL : DTLEADS_DASHBOARD_URL_LOCAL
+              }
+              style={{
+                margin: 0,
+                padding: 0,
+                border: 'none',
+                width: '100%',
+                height: '100%'
+              }}
+              title="DTLeads"
+            />
           </Card>
-        </Stack>
+        </Group>
       </Stack>
     </Box>
   );
 };
 
 TabContentModal.propTypes = {
-  children: PropTypes.any
+  isOpen: PropTypes.any,
+  onToggle: PropTypes.any
 };
 
 export default TabContentModal;
